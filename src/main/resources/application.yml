@@ -2,11 +2,11 @@ spring:
   h2:
     console:
       enabled: true
-      path: /h2-console
+      path: /h2
 
   datasource:
     hikari:
-      jdbc-url: jdbc:h2:tcp://localhost/~/todo
+      jdbc-url: jdbc:h2:mem:test
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -20,3 +20,12 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
+    open-in-view: false
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
