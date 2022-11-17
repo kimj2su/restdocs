@@ -1,0 +1,11 @@
+= REST Docs 문서 만들기
+:doctype: book
+:icons: font
+// 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
+:source-highlighter: highlightjs
+// toc (Table Of Contents)를 문서의 좌측에 두기
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+include::Member-API.adoc[]

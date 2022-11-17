@@ -1,0 +1,22 @@
+[[Member-API]]
+== Member API
+
+[[Member-단일-조회]]
+=== Member 단일 조회
+operation::member-controller-test/member_get[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Member-저장]]
+=== Member 저장
+operation::member-controller-test/save[snippets='http-request,request-fields,http-response']
+
+[[Member-페이징-조회]]
+=== Member 페이징 조회
+operation::member-controller-test/member-find-all[snippets='http-request,request-parameters,http-response']
+
+[[Member-수정]]
+=== Member 수정
+operation::member-controller-test/member-modify[[snippets='path-parameters,request-fields,http-request,http-response']]
+
+ifndef::snippets[]
+:snippets: ../../target/generated-snippets
+endif::[]
