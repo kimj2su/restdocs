@@ -1,4 +1,5 @@
 = REST Docs 문서 만들기
+kimjisu
 :doctype: book
 :icons: font
 // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
