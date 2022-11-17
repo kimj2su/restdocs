@@ -49,7 +49,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- (1) -->
+        <!-- (1) Test scope RestDocs MockMvc 를 추가합니다.-->
         <!-- Rest docs -->
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
@@ -83,7 +83,7 @@
                 <executions>
                     <execution>
                         <id>generate-docs</id>
-                        <!-- (3) -->
+                        <!-- (3) prepare-package 옵션은 패키지내에 API 문서를 포함할 수 있게 합니다.-->
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>process-asciidoc</goal>
@@ -95,7 +95,7 @@
                     </execution>
                 </executions>
                 <dependencies>
-                    <!-- (4) -->
+                    <!-- (4) Asciidoctor 의존성으로 spring-restdocs-asciidoctor 추가 .adoc 파일이 target/generated-snippets 아래에 생성된 Snippets 을 가리키는 설정이 추가된다.-->
                     <dependency>
                         <groupId>org.springframework.restdocs</groupId>
                         <artifactId>spring-restdocs-asciidoctor</artifactId>
@@ -103,9 +103,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
-            <!-- (1) -->
-            <!-- 문서 패키징 -->
+            <!-- (1) 문서가 패키지로 복사되기 전에 생성되야 하므로 위에 Asciidoctor 플러그인 뒤에 선언합니다. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -118,9 +116,9 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <!-- (2) -->
+                            <!-- (2) generated-docs/index.html 파일을 static/docs 에 복사-->
                             <outputDirectory>
-                                ${project.build.outputDirectory}/static/docs
+                                ${basedir}/src/main/resources/static/docs
                             </outputDirectory>
                             <resources>
                                 <resource>
