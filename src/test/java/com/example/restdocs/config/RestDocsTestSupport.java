@@ -1,7 +1,5 @@
-package com.example.restdocs.support.docs;
+package com.example.restdocs.config;
 
-import com.example.restdocs.config.RestDocsConfig;
-import com.example.restdocs.support.ControllerTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.extension.ExtendWith;
