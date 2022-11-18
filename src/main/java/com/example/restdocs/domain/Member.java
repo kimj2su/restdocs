@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.persistence.EnumType;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,11 +23,21 @@ public class Member {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private MemberStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sex", nullable = false)
+    private Sex sex;
+
     @Builder
-    public Member(Long id, String email, String name) {
+    public Member(Long id, String email, String name, MemberStatus status) {
         this.id = id;
         this.email = email;
         this.name = name;
+        this.status = status;
+        this.sex = Sex.MALE;
     }
 
     public void modifyName(String name) {
