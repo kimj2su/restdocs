@@ -1,46 +1,33 @@
 package com.example.restdocs.controller;
 
+import com.example.restdocs.config.RestDocsTestSupport;
+import com.example.restdocs.document.DocumentLinkGenerator;
 import com.example.restdocs.domain.Member;
+import com.example.restdocs.domain.MemberStatus;
 import com.example.restdocs.dto.MemberCreateForm;
 import com.example.restdocs.dto.MemberModifyRequest;
-import com.example.restdocs.service.MemberService;
-import com.example.restdocs.support.docs.RestDocsTestSupport;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.snippet.Attributes;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.example.restdocs.config.RestDocsConfig.field;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@WebMvcTest(MemberController.class)
+@WebMvcTest(MemberController.class)
 //@SpringBootTest
 //@AutoConfigureMockMvc
 //@AutoConfigureRestDocs // rest docs 자동 설정
@@ -107,7 +94,9 @@ class MemberControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 requestFields(
                                         fieldWithPath("email").description("email").attributes(field("constraints", "길이 30 이하")),
-                                        fieldWithPath("name").description("name").attributes(field("constraints", "길이 10 이하"))
+                                        fieldWithPath("name").description("name").attributes(field("constraints", "길이 10 이하")),
+//                                        fieldWithPath("status").description("link:member-status.html[상태 코드,role=\"popup\"]")
+                                        fieldWithPath("status").description(DocumentLinkGenerator.generateLinkCode(DocumentLinkGenerator.DocUrl.MEMBER_STATUS))
                                 )
                         )
                 )
@@ -133,7 +122,9 @@ class MemberControllerTest extends RestDocsTestSupport {
                                 responseFields( // response 필드 정보 입력
                                         fieldWithPath("id").description("ID"),
                                         fieldWithPath("email").description("email"),
-                                        fieldWithPath("name").description("name")
+                                        fieldWithPath("name").description("name"),
+                                        fieldWithPath("status").description("멤버상태"),
+                                        fieldWithPath("sex").description("성별")
                                 )
                         )
                 );
@@ -170,7 +161,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         Long memberId = 1L;
         Member member = Member.builder().id(1L).email("jisu@naver.com").name("김지수2").build();
         MemberModifyRequest memberModifyRequest = memberModifyRequest();
-        given(memberService.modifyMember(memberId, memberModifyRequest)).willReturn(member);
+        given(memberService.modifyMember(anyLong(), any(MemberModifyRequest.class))).willReturn(member);
 
 
         mockMvc.perform(
@@ -188,11 +179,12 @@ class MemberControllerTest extends RestDocsTestSupport {
                                 )
                         )
                 );
+        then(memberService).should().modifyMember(anyLong(), any(MemberModifyRequest.class));
     }
 
 
     private MemberCreateForm memberCreateForm() {
-        return MemberCreateForm.of("jisu@email.com", "김지수");
+        return MemberCreateForm.of("jisu@email.com", "김지수", MemberStatus.NOMAL);
     }
     private MemberModifyRequest memberModifyRequest() {
         return MemberModifyRequest.of("김지수2");

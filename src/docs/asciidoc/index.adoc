@@ -8,5 +8,14 @@ kimjisu
 :toc: left
 :toclevels: 2
 :sectlinks:
+:docinfo: shared-head
 
-include::Member-API.adoc[]
+include::overview.adoc[]
+
+// include::Member-API.adoc[]
+[[API-List]]
+== APIs
+
+
+=== Member API
+* link:Member-API.html[회원 API, window=_blank]
