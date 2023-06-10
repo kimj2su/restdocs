@@ -1256,8 +1256,6 @@ include::Member-API.adoc[]
 기본 index.adoc에 overview.adoc을 추가해줍니다.  
 그리고 다시 한번 빌드를 합니다.  
 
-![](img/img_16.png)
-
 최종적으로 문서가 완성되었습니다.
 
 ## 4. 링크로 문서화
